@@ -21,14 +21,13 @@ const route = async (
   >,
   FunctionType: any,
   params?: any,
-  body?: any,
 ) => {
   try {
     const fun = new FunctionType();
     const auth = config.disableAuth
       ? null
       : await FBFunction.validateFirebaseIdToken(req.headers.authorization);
-    return await fun.request(auth, params, body);
+    return await fun.request(auth, params);
   } catch (err) {
     return err;
   }
@@ -37,19 +36,6 @@ const route = async (
 const fast = fastify()
   .get('/auth', async (request) => route(request, Auth))
   .get('/rickshawstop', async (request) => route(request, RickshawStop, request.query as { q: string }));
-
-fast.addContentTypeParser(
-  'application/json',
-  { parseAs: 'string' },
-  (_, body, done) => {
-    try {
-      done(null, JSON.parse(body));
-    } catch (err) {
-      err.statusCode = 400;
-      done(err, undefined);
-    }
-  },
-);
 
 fast.listen(8080).catch((err) => {
   fast.log.error(err);
