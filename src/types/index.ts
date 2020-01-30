@@ -24,3 +24,8 @@ export interface IScrapResult {
   duration: number;
   status: string;
 }
+
+export interface event {
+  date: Date;
+  name: string;
+}

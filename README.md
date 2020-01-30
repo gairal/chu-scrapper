@@ -16,8 +16,8 @@ See the client side package here [chu-events](https://github.com/gairal/chu-even
 
 This package is a serverless backend built on top of Firebase Functions (gCloud Functions). It exposes 3 endpoints:
 
-- GET /tweets => search for tweets
-- POST /sheets => save tweets to a google sheet
-- GET /translates => translate a string in English
+- GET /roxy => scrap roxy theater
+- POST /rickshawstop => scrap rickshawstop
+- GET /indenpendent => scrap the indenpendent
 
 The whole API is behind a google SSO authentication

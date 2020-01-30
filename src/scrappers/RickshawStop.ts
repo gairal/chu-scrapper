@@ -1,23 +1,34 @@
 
-import axios from 'axios';
+import { parse } from 'url';
 
-import { logger } from '../config';
+import { load } from 'cheerio';
+
 import Scrapper from './Scrapper';
-import { IScrapResult } from '../types';
 
-export default class RickshawStop extends Scrapper {
+interface ExtractedData{
+  name: string
+  weeks: { name: string, events: any[] }[][]
+}
+
+export default class RickshawStop extends Scrapper<ExtractedData> {
   constructor() {
-    super('RickshawStop');
+    super('RickshawStop', parse('https://www.rickshawstop.com/calendar/'));
   }
 
-  public async scrap(): Promise<IScrapResult> {
-    const start = process.hrtime();
+  protected extractData(data: string): ExtractedData[] {
     try {
-      const dom = await axios.get('https://www.rickshawstop.com/calendar/');
-      await this.save();
-      return Scrapper.getResult(start);
+      const $ = load(data);
+      const months = $('article.calendar-view table').map((_, t) => {
+        const $t = $(t);
+        return {
+          name: $t.find('h3.month').text(),
+          days: $t.find('td.data').map((___, d) => d.attribs.class).get(),
+        };
+      }).get();
+
+      return months;
     } catch (err) {
-      const reason = Error(`failed ${this.name} request`);
+      const reason = Error(`failed ${this.name} extractData`);
       reason.stack += `\nCaused By:\n ${err.stack}`;
       throw reason;
     }
