@@ -1,0 +1,8 @@
+{
+  "verbose": true,
+  "debug": false,
+  "ignore": ["test", ".git", "node_modules", "dist"],
+  "watch": ["src"],
+  "exec": "npm run dev",
+  "ext": "ts"
+}
