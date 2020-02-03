@@ -6,4 +6,4 @@ import RickshawStop from './functions/RickshawStop';
 admin.initializeApp();
 
 export const auth = Auth.init();
-export const reddits = RickshawStop.init();
+export const rickshawStop = RickshawStop.init();

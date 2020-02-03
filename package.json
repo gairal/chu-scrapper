@@ -6,7 +6,7 @@
     "deploy": "npx firebase deploy --only functions --project com-gairal-chools",
     "dev": "node --inspect -r ts-node/register ./src/fastify.ts",
     "format": "npx prettier --write",
-    "lint": "tslint --project tsconfig.json",
+    "lint": "npx eslint ./src/**/*.ts",
     "logs": "npx firebase functions:log",
     "serve": "npm run build && npx firebase serve --only functions --project com-gairal-chools",
     "shell": "npm run build && npx firebase functions:shell --project com-gairal-chools",
@@ -14,7 +14,6 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "@types/cheerio": "^0.22.16",
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
     "cors": "^2.8.5",
@@ -26,6 +25,7 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/cheerio": "^0.22.16",
     "@types/cors": "^2.8.6",
     "@types/dotenv": "^8.2.0",
     "@types/node": "^13.5.2",
