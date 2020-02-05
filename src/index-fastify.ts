@@ -1,41 +1,22 @@
-import { IncomingMessage } from 'http';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import * as fastify from 'fastify';
+import { ServerResponse } from 'http';
+
+import * as fastify from 'fastify'; // eslint-disable-line import/no-extraneous-dependencies
 import * as admin from 'firebase-admin';
 
-import Auth from './functions/Auth';
-import RickshawStop from './functions/RickshawStop';
-import FBFunction from './functions/FBFunction';
-import { config } from './config';
+import functions from './functions';
 
 admin.initializeApp();
 
-const route = async (
-  { req }: fastify.FastifyRequest<
-  IncomingMessage,
-  fastify.DefaultQuery,
-  fastify.DefaultParams,
-  fastify.DefaultHeaders,
-  any
-  >,
-  FunctionType: any,
-  params?: any,
+const request = (onRequest: any) => (
+  req: fastify.FastifyRequest, res: fastify.FastifyReply<ServerResponse>,
 ) => {
-  try {
-    const fun = new FunctionType();
-    const auth = config.disableAuth
-      ? null
-      : await FBFunction.validateFirebaseIdToken(req.headers.authorization);
-    return await fun.request(auth, params);
-  } catch (err) {
-    return err;
-  }
+  (res as any).setHeader = res.res.setHeader.bind(res.res);
+  return onRequest(req, res);
 };
-
 const fast = fastify()
-  .get('/auth', async (request) => route(request, Auth))
-  .get('/rickshawstop', async (request) => route(request, RickshawStop, request.query as { q: string }));
+  .get('/auth', request(functions.auth))
+  .get('/rickshaw-stop', request(functions.rickshawStop));
 
 fast.listen(8080).catch((err) => {
   fast.log.error(err);

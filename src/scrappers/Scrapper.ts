@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { UrlWithStringQuery } from 'url';
 import { logger } from '../config';
-import { IScrapResult } from '../types';
+import { IScrapResult } from '../FBFunction/types';
 
 export default abstract class Scrapper<T> {
   constructor(protected name: string, protected url: UrlWithStringQuery) {}

@@ -1,9 +1,14 @@
 import * as admin from 'firebase-admin';
+import { https } from 'firebase-functions';
 
-import Auth from './functions/Auth';
-import RickshawStop from './functions/RickshawStop';
+import functions from './functions';
 
 admin.initializeApp();
 
-export const auth = Auth.init();
-export const rickshawStop = RickshawStop.init();
+// export const auth = https.onRequest(functions.auth);
+// export const rickshawStop = https.onRequest(functions.rickshawStop);
+
+export = {
+  auth: https.onRequest(functions.auth),
+  rickshawstop: https.onRequest(functions.rickshawStop),
+};

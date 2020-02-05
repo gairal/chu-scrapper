@@ -1,5 +1,5 @@
-import FBFunction from './FBFunction';
-import { IAuth } from '../types';
+import FBFunction from '../FBFunction';
+import { IAuth } from '../FBFunction/types';
 
 export default class Auth extends FBFunction {
   // eslint-disable-next-line class-methods-use-this

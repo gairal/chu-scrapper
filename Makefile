@@ -35,5 +35,5 @@ debug:
 
 .PHONY: logs
 logs:
-	npx firebase functions:log --project com-gairal-chools
+	npx firebase functions:log --project com-gairal-chrapper
 
