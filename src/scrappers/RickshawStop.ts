@@ -4,29 +4,42 @@ import { parse } from 'url';
 import { load } from 'cheerio';
 
 import Scrapper from './Scrapper';
+import { Event, Venue } from './types';
 
-interface ExtractedData{
-  name: string
-  weeks: { name: string, events: any[] }[][]
-}
-
-export default class RickshawStop extends Scrapper<ExtractedData> {
+const BASE_URL = 'https://www.rickshawstop.com';
+export default class RickshawStop extends Scrapper<Event> {
   constructor() {
-    super('RickshawStop', parse('https://www.rickshawstop.com/calendar/'));
+    super('RickshawStop', parse(`${BASE_URL}/calendar`));
   }
 
-  protected extractData(data: string): ExtractedData[] {
+  protected extractData(data: string): Event[] {
     try {
       const $ = load(data);
-      const months = $('article.calendar-view table').map((_, t) => {
-        const $t = $(t);
-        return {
-          name: $t.find('h3.month').text(),
-          days: $t.find('td.data').map((___, d) => d.attribs.class).get(),
-        };
-      }).get();
+      const events: Event[] = [];
+      $('article.calendar-view table').each((_, t) => {
+        $(t).find('td.data.has-event .one-event').each((__, d) => {
+          const $d = $(d);
+          if ($d.find('.sold-out').length) return;
 
-      return months;
+          const $headline = $d.find('.event-name a');
+          const name = $headline.text();
+          events.push({
+            date: new Date($d
+              .parent()
+              .find('.date .value-title')
+              .attr('title') as string),
+            description: $d
+              .find('.supports a')
+              .map((___, s) => $(s).text()).get().join(),
+            img: $d.find('.image-url img').attr('src'),
+            name,
+            url: `${BASE_URL}${$headline.attr('href')}`,
+            venue: Venue.RickshawStop,
+          });
+        });
+      });
+
+      return events;
     } catch (err) {
       const reason = Error(`failed ${this.name} extractData`);
       reason.stack += `\nCaused By:\n ${err.stack}`;

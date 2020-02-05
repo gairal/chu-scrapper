@@ -33,11 +33,11 @@ export default abstract class Scrapper<T> {
   public async scrap(): Promise<IScrapResult> {
     const start = process.hrtime();
     try {
-      const { data } = await axios.get(this.url.toString());
+      const { data } = await axios.get(this.url.href);
       const raw = this.extractData(data);
 
       await this.save();
-      return Scrapper.getResult(start, { raw });
+      return Scrapper.getResult(start, { count: raw.length, raw });
     } catch (err) {
       const reason = Error(`failed ${this.name} scrap`);
       reason.stack += `\nCaused By:\n ${err.stack}`;
