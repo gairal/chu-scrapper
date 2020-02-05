@@ -7,7 +7,7 @@ import Scrapper from './Scrapper';
 import { Event, Venue } from './types';
 
 const BASE_URL = 'https://www.rickshawstop.com';
-export default class RickshawStop extends Scrapper<Event> {
+export default class RickshawStop extends Scrapper {
   constructor() {
     super('RickshawStop', parse(`${BASE_URL}/calendar`));
   }
