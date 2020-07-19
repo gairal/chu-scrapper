@@ -1,12 +1,10 @@
 ## Compiled JavaScript files
-**/*.js
 **/*.js.map
 .env
 firebase-debug.log
 
-# Typescript v1 declaration files
-typings/
-
-node_modules/
-lib/
+# dirs
 coverage/
+dist/
+lib/
+node_modules/
