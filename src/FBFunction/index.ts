@@ -1,15 +1,16 @@
-import * as functions from 'firebase-functions';
+import { https, Response, Request } from 'firebase-functions';
 
 import { IAuth, IError } from './types';
 import { logger } from '../config';
 import validateFirebaseIdToken from './auth';
 import cors from './cors';
 
-const catcher = (res: functions.Response) => (err: IError) => {
+const catcher = (res: Response) => (err: IError) => {
   logger.error(err);
 
   const { status } = err;
-  if (!status) throw new functions.https.HttpsError('unavailable', err.message);
+  const { HttpsError } = https;
+  if (!status) throw new HttpsError('unavailable', err.message);
 
   const { authorized, message } = err;
   res.send({
@@ -22,13 +23,10 @@ const catcher = (res: functions.Response) => (err: IError) => {
 export default abstract class FBFunction<T = void> {
   protected abstract request(
     auth: IAuth | null,
-    query?: functions.Request['query']
+    query?: Request['query']
   ): Promise<T>;
 
-  public async onRequest(
-    req: functions.Request,
-    res: functions.Response
-  ): Promise<void> {
+  public async onRequest(req: Request, res: Response): Promise<void> {
     try {
       // check CORS
       await cors(req, res);

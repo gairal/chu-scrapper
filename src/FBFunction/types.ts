@@ -1,14 +1,14 @@
-import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
+import { auth } from 'firebase-admin';
+import { Request, Response } from 'firebase-functions';
 
 export interface IAuth {
-  decodedIdToken: admin.auth.DecodedIdToken;
+  decodedIdToken: auth.DecodedIdToken;
   idToken: string;
 }
 
 export interface ICorsReturn {
-  req: functions.Request;
-  res: functions.Response;
+  req: Request;
+  res: Response;
 }
 
 export interface IError extends Error {
