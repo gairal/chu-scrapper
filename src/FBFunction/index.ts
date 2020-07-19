@@ -5,7 +5,7 @@ import { logger } from '../config';
 import validateFirebaseIdToken from './auth';
 import cors from './cors';
 
-const catcher = (res:functions.Response) => (err: IError) => {
+const catcher = (res: functions.Response) => (err: IError) => {
   logger.error(err);
 
   const { status } = err;
@@ -19,16 +19,16 @@ const catcher = (res:functions.Response) => (err: IError) => {
   });
 };
 
-export default abstract class FBFunction {
-  protected abstract request (
+export default abstract class FBFunction<T> {
+  protected abstract request(
     auth: IAuth | null,
-    query?: functions.Request['query'],
-  ): Promise<any>;
+    query?: functions.Request['query']
+  ): Promise<T>;
 
   public async onRequest(
     req: functions.Request,
-    res: functions.Response,
-  ) {
+    res: functions.Response
+  ): Promise<void> {
     try {
       // check CORS
       await cors(req, res);

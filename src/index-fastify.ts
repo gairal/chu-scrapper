@@ -1,22 +1,25 @@
-
-import { ServerResponse } from 'http';
-
-import * as fastify from 'fastify'; // eslint-disable-line import/no-extraneous-dependencies
+import { fastify, FastifyInstance, RouteHandlerMethod } from 'fastify';
 import * as admin from 'firebase-admin';
 
 import functions from './functions';
 
 admin.initializeApp();
 
-const request = (onRequest: any) => (
-  req: fastify.FastifyRequest, res: fastify.FastifyReply<ServerResponse>,
-) => {
-  (res as any).setHeader = res.res.setHeader.bind(res.res);
-  return onRequest(req, res);
-};
-const fast = fastify()
-  .get('/auth', request(functions.auth))
-  .get('/rickshaw-stop', request(functions.rickshawStop));
+const fast: FastifyInstance = fastify();
+
+fast.addHook('onRequest', (_request, reply, next) => {
+  (reply as any).setHeader = (reply as any).res.setHeader.bind(
+    (reply as any).res
+  );
+  next();
+});
+
+fast
+  .get('/auth', (functions.auth as unknown) as RouteHandlerMethod)
+  .get(
+    '/rickshaw-stop',
+    (functions.rickshawStop as unknown) as RouteHandlerMethod
+  );
 
 fast.listen(8080).catch((err) => {
   fast.log.error(err);

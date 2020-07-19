@@ -1,4 +1,3 @@
-
 import * as cors from 'cors';
 import { Request, Response } from 'firebase-functions';
 
@@ -12,10 +11,9 @@ const corsMiddleware = cors({
   ],
 });
 
-const corsCheck = (req: Request, res: Response): Promise<ICorsReturn> => new Promise(
-  (resolve) => {
+const corsCheck = (req: Request, res: Response): Promise<ICorsReturn> =>
+  new Promise((resolve) => {
     corsMiddleware(req, res, () => resolve({ req, res }));
-  },
-);
+  });
 
 export default corsCheck;

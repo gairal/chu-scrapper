@@ -1,2 +1,21 @@
-
-{ "extends": "eslint-config-airbnb-typescript" }
+{
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "extends": ["airbnb-typescript-prettier"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint"],
+  "overrides": [
+    {
+        "files": ["index-fastify.ts"],
+        "rules": {
+            "@typescript-eslint/no-explicit-any": 0,
+            "import/no-extraneous-dependencies": 0,
+            "no-param-reassign": 0,
+        }
+    }
+  ]
+}

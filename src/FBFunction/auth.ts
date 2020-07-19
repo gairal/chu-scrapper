@@ -1,11 +1,10 @@
-
 import { auth } from 'firebase-admin';
 
 import { IAuth } from './types';
 import { config } from '../config';
 
 const validateFirebaseIdToken = async (
-  authorization?: string,
+  authorization?: string
 ): Promise<IAuth> => {
   if (config.disableAuth && process.env.NODE_ENV !== 'production') {
     return {
