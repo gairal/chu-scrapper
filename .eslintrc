@@ -8,6 +8,9 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-useless-constructor": "off"
+  },
   "overrides": [
     {
         "files": ["index-fastify.ts"],

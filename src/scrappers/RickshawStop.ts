@@ -1,4 +1,3 @@
-
 import { parse } from 'url';
 
 import { load } from 'cheerio';
@@ -22,13 +21,14 @@ export default class RickshawStop extends Scrapper {
 
         const $headline = $d.find('.event-name a');
         events.push({
-          date: new Date($d
-            .parent()
-            .find('.date .value-title')
-            .attr('title') as string),
+          date: new Date(
+            $d.parent().find('.date .value-title').attr('title') as string
+          ),
           description: $d
             .find('.supports a')
-            .map((__, s) => $(s).text()).get().join(),
+            .map((__, s) => $(s).text())
+            .get()
+            .join(),
           img: $d.find('.image-url img').attr('src'),
           name: $headline.text(),
           url: `${BASE_URL}${$headline.attr('href')}`,

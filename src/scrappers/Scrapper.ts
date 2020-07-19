@@ -8,7 +8,10 @@ import { Event } from './types';
 export default abstract class Scrapper {
   constructor(protected name: string, protected url: UrlWithStringQuery) {}
 
-  protected static getResult(start: [number, number], overrides?: object): IScrapResult {
+  protected static getResult(
+    start: [number, number],
+    overrides?: { count: number; events: Event[] }
+  ): IScrapResult {
     const [s, ms] = process.hrtime(start);
     return {
       duration: +`${s}.${ms}`,
