@@ -19,7 +19,7 @@ const catcher = (res: functions.Response) => (err: IError) => {
   });
 };
 
-export default abstract class FBFunction<T> {
+export default abstract class FBFunction<T = void> {
   protected abstract request(
     auth: IAuth | null,
     query?: functions.Request['query']

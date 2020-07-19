@@ -17,7 +17,14 @@
         "rules": {
             "@typescript-eslint/no-explicit-any": 0,
             "import/no-extraneous-dependencies": 0,
-            "no-param-reassign": 0,
+            "no-param-reassign": 0
+        }
+    },
+    {
+        "files": ["*.test.ts", "__mocks__/*"],
+        "rules": {
+            "@typescript-eslint/no-explicit-any": 0,
+            "class-methods-use-this": 0
         }
     }
   ]

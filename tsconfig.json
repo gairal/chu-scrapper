@@ -12,6 +12,6 @@
     "sourceMap": true,
     "target": "es2019"
   },
-  "include": ["./src/**/*.ts"],
+  "include": ["./src/**/*.ts", "./jest.config.js", "__mocks__/"],
   "exclude": ["node_modules", "dist"]
 }

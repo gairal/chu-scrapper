@@ -12,6 +12,17 @@
       "port": 9229,
       "restart": true,
       "protocol": "inspector"
-    }
+    },
+		{
+			"type": "node",
+			"name": "jest",
+			"request": "launch",
+			"args": ["-i", "-b", "--verbose", "--coverage", "false", "${relativeFile}"],
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"disableOptimisticBPs": true,
+			"program": "${workspaceFolder}/node_modules/jest/bin/jest"
+		}
   ]
 }
