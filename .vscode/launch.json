@@ -14,15 +14,18 @@
       "protocol": "inspector"
     },
 		{
-			"type": "node",
-			"name": "jest",
-			"request": "launch",
 			"args": ["-i", "-b", "--verbose", "--coverage", "false", "${relativeFile}"],
-			"cwd": "${workspaceFolder}",
 			"console": "integratedTerminal",
+			"cwd": "${workspaceFolder}",
+      "disableOptimisticBPs": true,
+      "env": {
+        "NODE_ENV": "test"
+      },
 			"internalConsoleOptions": "neverOpen",
-			"disableOptimisticBPs": true,
-			"program": "${workspaceFolder}/node_modules/jest/bin/jest"
+      "name": "jest",
+			"program": "${workspaceFolder}/node_modules/jest/bin/jest",
+			"request": "launch",
+			"type": "node"
 		}
   ]
 }

@@ -18,10 +18,13 @@ class Res {
   public type = jest.fn().mockReturnThis();
 }
 
-const initReq = () => ({ headers: baseHeaders });
-
-export const mockReq = (): Request => {
-  const req = initReq();
+type ReqOpts = { headers?: any };
+const initReq = (opts: ReqOpts = {}) => {
+  const { headers = {} } = opts;
+  return { headers: { ...baseHeaders, ...headers } };
+};
+export const mockReq = (opts?: ReqOpts): Request => {
+  const req = initReq(opts);
   return req as Request;
 };
 

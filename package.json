@@ -11,7 +11,7 @@
     "serve": "npm run build && npx firebase serve --only functions --project com-gairal-chrapper",
     "shell": "npm run build && npx firebase functions:shell --project com-gairal-chrapper",
     "start": "npm run debug",
-    "test": "npx jest"
+    "test": "NODE_ENV=test npx jest"
   },
   "main": "dist/index.js",
   "dependencies": {

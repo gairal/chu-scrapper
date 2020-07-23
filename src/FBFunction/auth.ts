@@ -6,7 +6,10 @@ import { config } from '../config';
 const validateFirebaseIdToken = async (
   authorization?: string
 ): Promise<IAuth> => {
-  if (config.disableAuth && process.env.NODE_ENV !== 'production') {
+  if (
+    config.disableAuth &&
+    !['production', 'test'].includes(process.env.NODE_ENV || '')
+  ) {
     return {
       decodedIdToken: {} as IAuth['decodedIdToken'],
       idToken: 'FAKE_ID_TOKEN',
@@ -21,7 +24,7 @@ const validateFirebaseIdToken = async (
     const idToken: string = authorization.split('Bearer ')[1];
     const decodedIdToken = await auth().verifyIdToken(idToken);
     const { email } = decodedIdToken;
-    if (!email || config.authorizedEmails.includes(email)) {
+    if (!email || !config.authorizedEmails.includes(email)) {
       throw Error('Unauthorized User');
     }
 

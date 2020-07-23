@@ -1,6 +1,7 @@
 import { Request, Response } from 'firebase-functions';
-import FBFunction from '../../FBFunction';
+
 import { mockReq, mockRes } from '../../../__mocks__/reqRes';
+import FBFunction from '../../FBFunction';
 
 const requestResult = 'DONE';
 class Test extends FBFunction<string> {
@@ -15,7 +16,7 @@ describe('FBFunction', () => {
   let res: Response;
   beforeEach(() => {
     func = new Test();
-    req = mockReq();
+    req = mockReq({ headers: { authorization: 'Bearer NAH' } });
     res = mockRes();
   });
 
@@ -24,7 +25,7 @@ describe('FBFunction', () => {
   });
 
   describe('onRequest', () => {
-    it('exposes an onRequest method', async () => {
+    it('expects to call send', async () => {
       await func.onRequest(req, res);
       expect(res.send).toHaveBeenCalledWith(requestResult);
     });
