@@ -8,7 +8,7 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js', 'json'],
   moduleNameMapper: {
     'Mocks(.*)$': '<rootDir>/test/__mocks__$1',
-    '~/(.*)$': '<rootDir>/src/$1',
+    '@/(.*)$': '<rootDir>/src/$1',
   },
   preset: 'ts-jest',
   testPathIgnorePatterns: ['./dist'],

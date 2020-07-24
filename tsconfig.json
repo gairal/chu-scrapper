@@ -7,11 +7,14 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "paths": {
+      "@/*": ["./src/"]
+    },
     "outDir": "./dist",
     "resolveJsonModule": true,
     "sourceMap": true,
     "target": "es2019"
   },
   "include": ["./src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "./jest.config.js", "__mocks__/"]
+  "exclude": ["node_modules", "dist", "./jest.config.js", "__mocks__/", "test/"]
 }

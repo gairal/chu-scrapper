@@ -1,4 +1,4 @@
-import { https, Response, Request } from 'firebase-functions';
+import { Response, Request } from 'firebase-functions';
 
 import { IAuth, IError } from './types';
 import { logger } from '../config';
@@ -8,15 +8,11 @@ import cors from './cors';
 const catcher = (res: Response) => (err: IError) => {
   logger.error(err);
 
-  const { status } = err;
-  const { HttpsError } = https;
-  if (!status) throw new HttpsError('unavailable', err.message);
-
-  const { authorized, message } = err;
+  const { authorized, message, status } = err;
   res.send({
     authorized: authorized !== undefined ? authorized : true,
     message,
-    status,
+    status: status || 500,
   });
 };
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'firebase-functions';
 
-import { mockReq, mockRes } from '../../../__mocks__/reqRes';
-import FBFunction from '../../FBFunction';
+import FBFunction from '../../src/FBFunction';
+import { mockReq, mockRes } from '../mocks/reqRes';
 
 const requestResult = 'DONE';
 class Test extends FBFunction<string> {
@@ -40,13 +40,6 @@ describe('FBFunction', () => {
         message: error.message,
         status: 420,
       });
-    });
-
-    it('fails on exception without status', async () => {
-      func.request = jest.fn().mockRejectedValue(Error('ERROR'));
-      await expect(func.onRequest(req, res)).rejects.toEqual(
-        Error('unavailable')
-      );
     });
   });
 });
