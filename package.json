@@ -4,7 +4,7 @@
     "build": "tsc",
     "debug": "npx nodemon",
     "deploy": "npx firebase deploy --project com-gairal-chrapper",
-    "dev": "node --inspect -r ts-node/register ./src/index-fastify.ts",
+    "dev": "node --inspect -r ts-node/register ./src/index-dev.ts",
     "format": "npx prettier --write",
     "lint": "npx eslint ./src/**/*.ts",
     "logs": "npx firebase functions:log",

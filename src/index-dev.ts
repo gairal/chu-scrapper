@@ -21,7 +21,13 @@ fast
     (functions.rickshawStop as unknown) as RouteHandlerMethod
   );
 
-fast.listen(8080).catch((err) => {
-  fast.log.error(err);
-  process.exit(1);
-});
+fast
+  .listen(8080)
+  .then(() => {
+    // eslint-disable-next-line no-console
+    console.log('STARTED', 8080);
+  })
+  .catch((err) => {
+    fast.log.error(err);
+    process.exit(1);
+  });
