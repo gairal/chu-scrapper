@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "lib": ["es2019"],
     "module": "CommonJS",
     "moduleResolution": "node",
-    "strict": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -13,6 +13,7 @@
     "outDir": "./dist",
     "resolveJsonModule": true,
     "sourceMap": true,
+    "strict": true,
     "target": "es2019"
   },
   "include": ["./src/**/*.ts"],

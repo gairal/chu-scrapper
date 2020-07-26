@@ -11,6 +11,6 @@ module.exports = {
     '@/(.*)$': '<rootDir>/src/$1',
   },
   preset: 'ts-jest',
-  testPathIgnorePatterns: ['./dist'],
+  testPathIgnorePatterns: ['./dist', './test'],
   verbose: false,
 };
